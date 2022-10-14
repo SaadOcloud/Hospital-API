@@ -1,22 +1,22 @@
-const Appointment= require('../models/appointmentModel');
-const Patient= require('../models/patientModel');
-const express = require('express');
-const router = express.Router();
-
-const{
+const express = require('express')
+const router = express.Router()
+const {
     createAppointment,
-    patientAppointments,
-    appointmentList,
-    deleteAppointment,
+    getAppointments,
+    getAppointmentById,
     updateAppointment,
-    getremainingBill,
+    deleteAppointment,
+    findAllAppointments,
+    getRemainingBill,
+} = require('../controllers/appointmentController')
 
-}=require('../controller/appointmentController');
+router.route('/').get(getAppointments).post(createAppointment)
+router.route('/findAll').get(findAllAppointments)
+router.route('/remainingBill').get(getRemainingBill)
+router
+    .route('/:id')
+    .get(getAppointmentById)
+    .delete(deleteAppointment)
+    .put(updateAppointment)
 
-router.route('/').post(createAppointment).get(appointmentList);
-
-router.route('/:id').get(patientAppointments).delete(deleteAppointment).put(updateAppointment);
-
-router.route('/remainingBill/:id').get(getremainingBill);
-
-module.exports = router;
+module.exports = router
